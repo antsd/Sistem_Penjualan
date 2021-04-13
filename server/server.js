@@ -15,6 +15,30 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
+//db
+const db = require("./app/models");
+const Role = db.role;
+
+db.sequelize.sync();
+// db.sequelize.sync({ force: true }).then(() => {
+//   console.log("Drop and Resync DB");
+//   initial();
+// });
+
+//routes
+require("./app/routes/auth.routes")(app);
+require("./app/routes/user.routes")(app);
+
+function initial() {
+  Role.create({
+    id: 1,
+    name: "user",
+  });
+  Role.create({
+    id: 2,
+    name: "admin",
+  });
+}
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to sistem penjualan" });
