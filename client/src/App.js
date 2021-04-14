@@ -31,8 +31,8 @@ const App = () => {
 
   return (
     <div>
-      <nav className='navbar navbar-expand navbar-dark bg-dark'>
-        {currentUser ? (
+      {currentUser ? (
+        <nav className='navbar navbar-expand navbar-dark bg-dark'>
           <div className='navbar-nav ml-auto'>
             <li className='nav-item'>
               <Link to={"/profile"} className='nav-link'>
@@ -45,10 +45,10 @@ const App = () => {
               </a>
             </li>
           </div>
-        ) : (
-          <div></div>
-        )}
-      </nav>
+        </nav>
+      ) : (
+        <div></div>
+      )}
 
       <div className='container mt-3'>
         <Switch>
