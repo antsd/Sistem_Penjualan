@@ -15,7 +15,6 @@ const getAdminBoard = () => {
 };
 
 export default {
-  getPublicContent,
   getUserBoard,
   getAdminBoard,
 };

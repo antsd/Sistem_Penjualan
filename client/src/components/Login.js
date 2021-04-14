@@ -45,8 +45,13 @@ const Login = (props) => {
     if (checkBtn.current.context._errors.length === 0) {
       AuthService.login(username, password).then(
         () => {
-          props.history.push("/profile");
-          window.location.reload();
+          if (username === "anas") {
+            props.history.push("/admin");
+            window.location.reload();
+          } else {
+            props.history.push("/");
+            window.location.reload();
+          }
         },
         (error) => {
           const resMessage =
@@ -67,13 +72,12 @@ const Login = (props) => {
 
   return (
     <div className='col-md-12'>
+      <img
+        src='//ssl.gstatic.com/accounts/ui/avatar_2x.png'
+        alt='profile-img'
+        className='profile-img-card'
+      />
       <div className='card card-container'>
-        <img
-          src='//ssl.gstatic.com/accounts/ui/avatar_2x.png'
-          alt='profile-img'
-          className='profile-img-card'
-        />
-
         <Form onSubmit={handleLogin} ref={form}>
           <div className='form-group'>
             <label htmlFor='username'>Username</label>
