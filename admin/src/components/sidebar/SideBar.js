@@ -11,14 +11,18 @@ import {
 import { NavItem, NavLink, Nav } from "reactstrap";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
-
+import Logo from "../../assets/PT Deemes.svg";
 const SideBar = ({ isOpen, toggle }) => (
   <div className={classNames("sidebar", { "is-open": isOpen })}>
     <div className='sidebar-header'>
       <span color='info' onClick={toggle} style={{ color: "#fff" }}>
         &times;
       </span>
-      <h3>Bootstrap Sidebar</h3>
+      <img
+        src={Logo}
+        alt='PT Deemes'
+        style={{ height: "100px", width: "250px" }}
+      />
     </div>
     <div className='side-menu'>
       <Nav vertical className='list-unstyled pb-3'>
@@ -44,6 +48,12 @@ const SideBar = ({ isOpen, toggle }) => (
           <NavLink tag={Link} to={"/faq"}>
             <FontAwesomeIcon icon={faQuestion} className='mr-2' />
             Data User
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink tag={Link} to={"/faq"}>
+            <FontAwesomeIcon icon={faQuestion} className='mr-2' />
+            Data Transaksi
           </NavLink>
         </NavItem>
       </Nav>

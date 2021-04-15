@@ -15,61 +15,18 @@ import Profile from "./components/Profile";
 import BoardAdmin from "./pages/BoardAdmin";
 
 const App = () => {
-  const [showAdminBoard, setShowAdminBoard] = useState(false);
-  const [currentUser, setCurrentUser] = useState(undefined);
-
   //sidebar
   const [sidebarIsOpen, setSidebarOpen] = useState(true);
   const toggleSidebar = () => setSidebarOpen(!sidebarIsOpen);
 
-  useEffect(() => {
-    const user = AuthService.getCurrentUser();
-
-    if (user) {
-      setCurrentUser(user);
-      setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
-    }
-  }, []);
-
-  const logOut = () => {
-    AuthService.logout();
-  };
-
   return (
-    <div>
-      {currentUser ? (
-        <nav
-          className='navbar navbar-expand navbar-light navbar1'
-          style={{ backgroundColor: "#E8F0FE" }}
-        >
-          <Link to={"/"}>
-            <img className='logoNav' src={Logo} alt='Logo' />
-          </Link>
-          <div className='navbar-nav ml-auto'>
-            <li className='nav-item'>
-              <Link to={"/profile"} className='nav-link'>
-                {currentUser.username}
-              </Link>
-            </li>
-            <li className='nav-item'>
-              <a href='/login' className='nav-link' onClick={logOut}>
-                Log Out
-              </a>
-            </li>
-          </div>
-        </nav>
-      ) : (
-        <div></div>
-      )}
-
-      <div className='container mt-3'>
-        <Switch>
-          <Route exact path={["/", "/admin"]} component={BoardAdmin} />
-          <Route exact path='/login' component={Login} />
-          <Route exact path='/profile' component={Profile} />
-        </Switch>
+    <Switch>
+      <Route exact path='/login' component={Login} />
+      <div className='App wrapper'>
+        <SideBar toggle={toggleSidebar} isOpen={sidebarIsOpen} />
+        <Content toggleSidebar={toggleSidebar} sidebarIsOpen={sidebarIsOpen} />
       </div>
-    </div>
+    </Switch>
   );
 };
 
