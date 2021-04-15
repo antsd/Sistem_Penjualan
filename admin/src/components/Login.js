@@ -5,6 +5,8 @@ import CheckButton from "react-validation/build/button";
 
 import AuthService from "../services/auth.service";
 
+import Logo from "../assets/PT Deemes.png";
+
 const required = (value) => {
   if (!value) {
     return (
@@ -67,13 +69,13 @@ const Login = (props) => {
 
   return (
     <div className='col-md-12'>
+      <img
+        src={Logo}
+        style={{ height: "150px", width: "300px" }}
+        alt='profile-img'
+        className='profile-img-card'
+      />
       <div className='card card-container'>
-        <img
-          src='//ssl.gstatic.com/accounts/ui/avatar_2x.png'
-          alt='profile-img'
-          className='profile-img-card'
-        />
-
         <Form onSubmit={handleLogin} ref={form}>
           <div className='form-group'>
             <label htmlFor='username'>Username</label>
