@@ -2,10 +2,10 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
-  faBriefcase,
-  faPaperPlane,
+  faBuilding,
+  faDiceD6,
   faQuestion,
-  faImage,
+  faUser,
   faCopy,
 } from "@fortawesome/free-solid-svg-icons";
 import { NavItem, NavLink, Nav } from "reactstrap";
@@ -34,25 +34,25 @@ const SideBar = ({ isOpen, toggle }) => (
         </NavItem>
         <NavItem>
           <NavLink tag={Link} to={"/barang"}>
-            <FontAwesomeIcon icon={faBriefcase} className='mr-2' />
+            <FontAwesomeIcon icon={faDiceD6} className='mr-2' />
             Data Barang
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink tag={Link} to={"/customer"}>
-            <FontAwesomeIcon icon={faImage} className='mr-2' />
+            <FontAwesomeIcon icon={faBuilding} className='mr-2' />
             Data Customer
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink tag={Link} to={"/user"}>
-            <FontAwesomeIcon icon={faQuestion} className='mr-2' />
+            <FontAwesomeIcon icon={faUser} className='mr-2' />
             Data User
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink tag={Link} to={"/transaksi"}>
-            <FontAwesomeIcon icon={faQuestion} className='mr-2' />
+            <FontAwesomeIcon icon={faCopy} className='mr-2' />
             Data Transaksi
           </NavLink>
         </NavItem>

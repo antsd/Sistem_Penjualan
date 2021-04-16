@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import Pagination from "@material-ui/lab/Pagination";
-import BarangDataService from "../services/barang.service";
+import CustomerDataService from "../../services/customer.service";
 import { useTable } from "react-table";
 
-const BarangList = (props) => {
-  const [barang, setBarang] = useState([]);
+const CustomerList = (props) => {
+  const [customer, setCustomer] = useState([]);
   const [searchNama, setSearchNama] = useState("");
-  const barangRef = useRef();
+  const customerRef = useRef();
 
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
@@ -14,7 +14,7 @@ const BarangList = (props) => {
 
   const pageSizes = [3, 6, 9];
 
-  barangRef.current = barang;
+  customerRef.current = customer;
 
   const onChangeSearchNama = (e) => {
     const searchNama = e.target.value;
@@ -25,7 +25,7 @@ const BarangList = (props) => {
     let params = {};
 
     if (searchNama) {
-      params["nama_barang"] = searchNama;
+      params["nama_perusahaan"] = searchNama;
     }
 
     if (page) {
@@ -42,11 +42,11 @@ const BarangList = (props) => {
   const retrieveBarang = () => {
     const params = getRequestParams(searchNama, page, pageSize);
 
-    BarangDataService.getAll(params)
+    CustomerDataService.getAll(params)
       .then((response) => {
-        const { barang, totalPages } = response.data;
+        const { customer, totalPages } = response.data;
 
-        setBarang(barang);
+        setCustomer(customer);
         setCount(totalPages);
 
         console.log(response.data);
@@ -63,7 +63,7 @@ const BarangList = (props) => {
   };
 
   const removeAllTutorials = () => {
-    BarangDataService.removeAll()
+    CustomerDataService.removeAll()
       .then((response) => {
         console.log(response.data);
         refreshList();
@@ -79,22 +79,22 @@ const BarangList = (props) => {
   };
 
   const openTutorial = (rowIndex) => {
-    const id = barangRef.current[rowIndex].id_barang;
+    const id = customerRef.current[rowIndex].id_perusahaan;
 
-    props.history.push("/barang/" + id);
+    props.history.push("/customer/" + id);
   };
 
   const deleteTutorial = (rowIndex) => {
-    const id = barangRef.current[rowIndex].id_barang;
+    const id = customerRef.current[rowIndex].id_perusahaan;
 
-    BarangDataService.remove(id)
+    CustomerDataService.remove(id)
       .then((response) => {
-        props.history.push("/barang");
+        props.history.push("/customer");
 
-        let newTutorials = [...barangRef.current];
+        let newTutorials = [...customerRef.current];
         newTutorials.splice(rowIndex, 1);
 
-        setBarang(newTutorials);
+        setCustomer(newTutorials);
       })
       .catch((e) => {
         console.log(e);
@@ -111,38 +111,38 @@ const BarangList = (props) => {
   };
 
   const handleAdd = () => {
-    props.history.push("/barang/add");
+    props.history.push("/customer/add");
   };
 
   const columns = useMemo(
     () => [
       {
-        Header: "Id Barang",
-        accessor: "id_barang",
+        Header: "Id Perusahaan",
+        accessor: "id_perusahaan",
       },
       {
-        Header: "Nama Barang",
-        accessor: "nama_barang",
+        Header: "Nama Perusahaan",
+        accessor: "nama_perusahaan",
       },
       {
-        Header: "Jenis Barang",
-        accessor: "jenis_barang",
+        Header: "Contact Person",
+        accessor: "contact_person",
       },
       {
-        Header: "Material",
-        accessor: "material",
+        Header: "Alamat",
+        accessor: "alamat",
       },
       {
-        Header: "qty",
-        accessor: "qty",
+        Header: "No Telp",
+        accessor: "no_telp",
       },
       {
-        Header: "unit",
-        accessor: "unit",
+        Header: "Fax",
+        accessor: "fax",
       },
       {
-        Header: "harga",
-        accessor: "harga",
+        Header: "Jenis Perusahaan",
+        accessor: "jenis_perusahaan",
       },
       {
         Header: "Actions",
@@ -174,7 +174,7 @@ const BarangList = (props) => {
     prepareRow,
   } = useTable({
     columns,
-    data: barang,
+    data: customer,
   });
 
   return (
@@ -184,7 +184,7 @@ const BarangList = (props) => {
           <input
             type='text'
             className='form-control'
-            placeholder='Cari Nama Barang'
+            placeholder='Cari Nama Customer'
             value={searchNama}
             onChange={onChangeSearchNama}
           />
@@ -223,7 +223,7 @@ const BarangList = (props) => {
           />
         </div>
         <button className='btn btn-sm btn-success tambah' onClick={handleAdd}>
-          Tambah Barang
+          Tambah Customer
         </button>
 
         <table
@@ -267,4 +267,4 @@ const BarangList = (props) => {
   );
 };
 
-export default BarangList;
+export default CustomerList;

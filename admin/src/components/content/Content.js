@@ -12,6 +12,9 @@ import Barang from "../../pages/Barang";
 import AddBarang from "../../pages/AddBarang";
 
 import ProtectedRoute from "../../services/ProtectedRoute";
+import CustomerList from "../../pages/customer/CustomerList";
+import AddCustomer from "../../pages/customer/AddCustomer";
+import Customer from "../../pages/customer/Customer";
 
 const Content = ({ sidebarIsOpen, toggleSidebar }) => (
   <Container
@@ -22,9 +25,12 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
     <Switch>
       <ProtectedRoute exact path='/' component={BoardAdmin} />
       <ProtectedRoute exact path='/profile' component={Profile} />
-      <ProtectedRoute exact path='/barang' component={BarangList} />
-      <ProtectedRoute exact path='/barang/add' component={AddBarang} />
-      <ProtectedRoute path='/barang/:id' component={Barang} />
+      <Route exact path='/barang' component={BarangList} />
+      <Route exact path='/barang/add' component={AddBarang} />
+      <Route path='/barang/:id' component={Barang} />
+      <Route exact path='/customer' component={CustomerList} />
+      <Route exact path='/customer/add' component={AddCustomer} />
+      <Route path='/customer/:id' component={Customer} />
     </Switch>
   </Container>
 );
