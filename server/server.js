@@ -3,9 +3,9 @@ const cors = require("cors");
 
 const app = express();
 
-var corsOptions = {
-  origin: "http://localhost:3000",
-};
+var corsOptions = [
+  ((origin = "http://localhost:3000"), (origin = "http://localhost:3001")),
+];
 
 app.use(cors(corsOptions));
 
@@ -19,15 +19,17 @@ app.use(express.urlencoded({ extended: true }));
 const db = require("./app/models");
 const Role = db.role;
 
-db.sequelize.sync();
-// db.sequelize.sync({ force: true }).then(() => {
-//   console.log("Drop and Resync DB");
-//   initial();
-// });
+// db.sequelize.sync();
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Drop and Resync DB");
+  initial();
+});
 
 //routes
 require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
+require("./app/routes/barang.routes")(app);
+require("./app/routes/customer.routes")(app);
 
 function initial() {
   Role.create({
