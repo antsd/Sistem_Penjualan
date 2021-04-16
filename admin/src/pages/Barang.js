@@ -14,8 +14,8 @@ const Tutorial = (props) => {
   const [currentBarang, setCurrentBarang] = useState(initialBarangState);
   const [message, setMessage] = useState("");
 
-  const getTutorial = (nama_barang) => {
-    BarangDataService.get(nama_barang)
+  const getTutorial = (id) => {
+    BarangDataService.get(id)
       .then((response) => {
         setCurrentBarang(response.data);
         console.log(response.data);
@@ -26,8 +26,8 @@ const Tutorial = (props) => {
   };
 
   useEffect(() => {
-    getTutorial(props.match.params.nama_barang);
-  }, [props.match.params.nama_barang]);
+    getTutorial(props.match.params.id);
+  }, [props.match.params.id]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -58,6 +58,7 @@ const Tutorial = (props) => {
       .then((response) => {
         console.log(response.data);
         setMessage("The tutorial was updated successfully!");
+        props.history.push("/barang");
       })
       .catch((e) => {
         console.log(e);
@@ -74,7 +75,6 @@ const Tutorial = (props) => {
         console.log(e);
       });
   };
-
   return (
     <div>
       {currentBarang ? (
@@ -82,24 +82,79 @@ const Tutorial = (props) => {
           <h4>Tutorial</h4>
           <form>
             <div className='form-group'>
-              <label htmlFor='title'>Title</label>
+              <label htmlFor='id_barang'>Id Barang</label>
               <input
                 type='text'
                 className='form-control'
-                id='title'
-                name='title'
-                value={currentBarang.title}
+                id='id_barang'
+                name='id_barang'
+                value={currentBarang.id_barang}
                 onChange={handleInputChange}
               />
             </div>
             <div className='form-group'>
-              <label htmlFor='description'>Description</label>
+              <label htmlFor='nama_barang'>Nama Barang</label>
               <input
                 type='text'
                 className='form-control'
-                id='description'
-                name='description'
-                value={currentBarang.description}
+                id='nama_barang'
+                name='nama_barang'
+                value={currentBarang.nama_barang}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className='form-group'>
+              <label htmlFor='jenis_barang'>Jenis Barang</label>
+              <input
+                type='text'
+                className='form-control'
+                id='jenis_barang'
+                name='jenis_barang'
+                value={currentBarang.jenis_barang}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className='form-group'>
+              <label htmlFor='material'>Material</label>
+              <input
+                type='text'
+                className='form-control'
+                id='material'
+                name='material'
+                value={currentBarang.material}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className='form-group'>
+              <label htmlFor='qty'>Qty</label>
+              <input
+                type='text'
+                className='form-control'
+                id='qty'
+                name='qty'
+                value={currentBarang.qty}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className='form-group'>
+              <label htmlFor='unit'>Unit</label>
+              <input
+                type='text'
+                className='form-control'
+                id='unit'
+                name='unit'
+                value={currentBarang.unit}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className='form-group'>
+              <label htmlFor='harga'>Harga</label>
+              <input
+                type='text'
+                className='form-control'
+                id='harga'
+                name='harga'
+                value={currentBarang.harga}
                 onChange={handleInputChange}
               />
             </div>

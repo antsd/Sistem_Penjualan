@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -16,13 +17,18 @@ const App = () => {
   const toggleSidebar = () => setSidebarOpen(!sidebarIsOpen);
 
   return (
-    <Switch>
-      <Route exact path='/login' component={Login} />
-      <div className='App wrapper'>
-        <SideBar toggle={toggleSidebar} isOpen={sidebarIsOpen} />
-        <Content toggleSidebar={toggleSidebar} sidebarIsOpen={sidebarIsOpen} />
-      </div>
-    </Switch>
+    <Router>
+      <Switch>
+        <Route exact path='/login' component={Login} />
+        <div className='App wrapper'>
+          <SideBar toggle={toggleSidebar} isOpen={sidebarIsOpen} />
+          <Content
+            toggleSidebar={toggleSidebar}
+            sidebarIsOpen={sidebarIsOpen}
+          />
+        </div>
+      </Switch>
+    </Router>
   );
 };
 

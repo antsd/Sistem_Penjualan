@@ -5,6 +5,7 @@ import { useTable } from "react-table";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
+import AddBarang from "./AddBarang";
 
 const BarangList = (props) => {
   const [barang, setBarang] = useState([]);
@@ -111,6 +112,10 @@ const BarangList = (props) => {
   const handlePageSizeChange = (event) => {
     setPageSize(event.target.value);
     setPage(1);
+  };
+
+  const handleAdd = () => {
+    props.history.push("/barang/add");
   };
 
   const columns = useMemo(
@@ -221,6 +226,9 @@ const BarangList = (props) => {
             onChange={handlePageChange}
           />
         </div>
+        <button className='btn btn-sm btn-success tambah' onClick={handleAdd}>
+          Tambah Barang
+        </button>
 
         <table
           className='table table-striped table-bordered'

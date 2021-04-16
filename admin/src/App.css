@@ -172,3 +172,8 @@ li a.dropdown-toggle::after {
     left: 68%;
   }
 }
+
+.tambah {
+  margin-left: 87%;
+  margin-bottom: 10px;
+}

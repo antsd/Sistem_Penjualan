@@ -160,7 +160,7 @@ const AddBarang = () => {
           </div>
 
           <button onClick={saveBarang} className='btn btn-success'>
-            Submit
+            Simpan
           </button>
         </div>
       )}
