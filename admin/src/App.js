@@ -2,17 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import Logo from "./assets/PT Deemes.svg";
+import "@fortawesome/fontawesome-free/css/all.css";
+import "@fortawesome/fontawesome-free/js/all.js";
 
 import SideBar from "./components/sidebar/SideBar";
 import Content from "./components/content/Content";
 
-import AuthService from "./services/auth.service";
-
 import Login from "./components/Login";
-import Home from "./pages/Home";
-import Profile from "./components/Profile";
-import BoardAdmin from "./pages/BoardAdmin";
 
 const App = () => {
   //sidebar
