@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import BarangDataService from "../services/barang.service";
+import BarangDataService from "../../services/barang.service";
 
 const Tutorial = (props) => {
   const initialBarangState = {

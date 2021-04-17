@@ -7,9 +7,9 @@ import Topbar from "./Topbar";
 
 import Profile from "../Profile";
 import BoardAdmin from "../../pages/BoardAdmin";
-import BarangList from "../../pages/BarangList";
-import Barang from "../../pages/Barang";
-import AddBarang from "../../pages/AddBarang";
+import BarangList from "../../pages/barang/BarangList";
+import Barang from "../../pages/barang/Barang";
+import AddBarang from "../../pages/barang/AddBarang";
 
 import ProtectedRoute from "../../services/ProtectedRoute";
 import CustomerList from "../../pages/customer/CustomerList";
@@ -24,7 +24,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
     <Topbar toggleSidebar={toggleSidebar} />
     <Switch>
       <ProtectedRoute exact path='/' component={BoardAdmin} />
-      <ProtectedRoute exact path='/profile' component={Profile} />
+      <Route exact path='/profile' component={Profile} />
       <Route exact path='/barang' component={BarangList} />
       <Route exact path='/barang/add' component={AddBarang} />
       <Route path='/barang/:id' component={Barang} />

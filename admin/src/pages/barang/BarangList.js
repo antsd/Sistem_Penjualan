@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import Pagination from "@material-ui/lab/Pagination";
-import BarangDataService from "../services/barang.service";
+import BarangDataService from "../../services/barang.service";
 import { useTable } from "react-table";
 
 const BarangList = (props) => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import BarangDataService from "../services/barang.service";
+import BarangDataService from "../../services/barang.service";
 
-import UserService from "../services/user.service";
+import UserService from "../../services/user.service";
 import { Switch, Route, Link } from "react-router-dom";
 
 const AddBarang = () => {
