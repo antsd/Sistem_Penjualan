@@ -30,6 +30,8 @@ require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
 require("./app/routes/barang.routes")(app);
 require("./app/routes/customer.routes")(app);
+require("./app/routes/alluser.routes")(app);
+require("./app/routes/transaksi.routes")(app);
 
 function initial() {
   Role.create({
