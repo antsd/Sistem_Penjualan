@@ -32,6 +32,7 @@ require("./app/routes/barang.routes")(app);
 require("./app/routes/customer.routes")(app);
 require("./app/routes/alluser.routes")(app);
 require("./app/routes/transaksi.routes")(app);
+require("./app/routes/penawaran.routes")(app);
 
 function initial() {
   Role.create({
