@@ -1,6 +1,7 @@
 const db = require("../models");
 const Penawaran = db.penawaran;
-const Customers = db.customer;
+const Barang = db.barang;
+const Customer = db.customer;
 const Op = db.Sequelize.Op;
 
 const getPagination = (page, size) => {
@@ -32,7 +33,10 @@ exports.create = (req, res) => {
   const penawaran = {
     id_penawaran: req.body.id_penawaran,
     disc: req.body.disc,
+    ppn: req.body.ppn,
+    grand_total: req.body.grand_total,
     id_perusahaan: req.body.id_perusahaan,
+    id_user: req.body.id_user,
   };
 
   // Save Tutorial in the database
@@ -61,6 +65,34 @@ exports.findAll = (req, res) => {
     where: condition,
     limit,
     offset,
+    include: [
+      {
+        model: Customer,
+        as: "perusahaan",
+        attributes: [
+          "id_perusahaan",
+          "nama_perusahaan",
+          "contact_person",
+          "alamat",
+          "no_telp",
+          "fax",
+          "jenis_perusahaan",
+        ],
+      },
+      {
+        model: Barang,
+        as: "barang",
+        attributes: [
+          "id_barang",
+          "nama_barang",
+          "jenis_barang",
+          "material",
+          "qty",
+          "unit",
+          "harga",
+        ],
+      },
+    ],
   })
     .then((data) => {
       const response = getPagingData(data, page, limit);

@@ -41,22 +41,27 @@ db.user.belongsToMany(db.role, {
   otherKey: "roleId",
 });
 
+db.barang.belongsToMany(db.penawaran, {
+  through: "detail_penawaran_barang",
+  foreignKey: "id_barang",
+  as: "barang",
+});
+
+db.penawaran.belongsToMany(db.barang, {
+  through: "detail_penawaran_barang",
+  foreignKey: "id_penawaran",
+  as: "barang",
+});
+
+// db.customer.hasMany(db.penawaran,"penawaran")
 db.penawaran.belongsTo(db.customer, {
-  as: "penawarancust",
+  as: "perusahaan",
   foreignKey: "id_perusahaan",
 });
+
 db.penawaran.belongsTo(db.user, {
   as: "penawaranusr",
   foreignKey: "id_user",
-});
-db.penawaran.belongsTo(db.detail_penawaran, {
-  as: "penawaranbrg",
-  foreignKey: "id_detail_penawaran",
-});
-
-db.detail_penawaran.belongsTo(db.barang, {
-  as: "penawaran",
-  foreignKey: "id_barang",
 });
 
 db.ROLES = ["user", "admin"];
