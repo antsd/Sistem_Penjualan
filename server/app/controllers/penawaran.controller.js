@@ -3,6 +3,7 @@ const Penawaran = db.penawaran;
 const Barang = db.barang;
 const Customer = db.customer;
 const Op = db.Sequelize.Op;
+const Sequelize = require("sequelize");
 
 const getPagination = (page, size) => {
   const limit = size ? +size : 3;
@@ -90,6 +91,8 @@ exports.findAll = (req, res) => {
           "qty",
           "unit",
           "harga",
+          //sum 2 row
+          [Sequelize.literal("COALESCE(qty, 0) * COALESCE(harga, 0)"), "total"],
         ],
       },
     ],
@@ -105,6 +108,36 @@ exports.findAll = (req, res) => {
       });
     });
 };
+
+// exports.addPenawaran = (req, res) => {
+//   const id_penawaran = req.params.id_penawaran;
+//   const id_barang = req.res.id_barang;
+
+//   Barang.findByPk(id_barang)
+//     .then((barang) => {
+//       if (!barang) {
+//         res.status(500).send({
+//           message: "Barang tidak ditemukannn",
+//         });
+//         Penawaran.findByPk(id_penawaran).then((penawaran) => {
+//           if (!penawaran) {
+//             res.status(500).send({
+//               message: "penawaran tidak ditemukan",
+//             });
+//           }
+//         });
+//         barang.addPenawaran(penawaran);
+//         res.send({
+//           message: "Barang was updated successfully.",
+//         });
+//       }
+//     })
+//     .catch((err) => {
+//       res.status(500).send({
+//         message: "Error retrieving Tutorial with id=" + id_penawaran,
+//       });
+//     });
+// };
 
 // Find a single Tutorial with an id
 exports.findOne = (req, res) => {
@@ -142,7 +175,7 @@ exports.update = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message: "Error updating Barang with id=" + id_penawaran,
-        id_penawaran,
+        err,
       });
     });
 };
@@ -167,7 +200,8 @@ exports.delete = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Could not delete Barang with id=" + id_penawaran,
+        message:
+          err.message || "Could not delete Barang with id=" + id_penawaran,
       });
     });
 };

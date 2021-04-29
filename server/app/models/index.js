@@ -25,7 +25,7 @@ db.barang = require("../models/barang.model")(sequelize, Sequelize);
 db.customer = require("../models/customer.model")(sequelize, Sequelize);
 db.transaksi = require("../models/transaksi.model")(sequelize, Sequelize);
 db.penawaran = require("../models/penawaran.model")(sequelize, Sequelize);
-db.detail_penawaran = require("../models/detail_penawaran.model")(
+db.DetailPenawaran = require("../models/detail.penawaran")(
   sequelize,
   Sequelize
 );
@@ -41,24 +41,25 @@ db.user.belongsToMany(db.role, {
   otherKey: "roleId",
 });
 
-db.barang.belongsToMany(db.penawaran, {
-  through: "detail_penawaran_barang",
-  foreignKey: "id_barang",
-  as: "barang",
-});
-
 db.penawaran.belongsToMany(db.barang, {
-  through: "detail_penawaran_barang",
+  through: "DetailPenawaran",
   foreignKey: "id_penawaran",
   as: "barang",
 });
 
-// db.customer.hasMany(db.penawaran,"penawaran")
+db.barang.belongsToMany(db.penawaran, {
+  through: "DetailPenawaran",
+  foreignKey: "id_barang",
+  as: "barang",
+});
+
+// db.customer.hasMany(db.penawaran, { as: "perusahaan" });
 db.penawaran.belongsTo(db.customer, {
   as: "perusahaan",
   foreignKey: "id_perusahaan",
 });
 
+// db.user.hasMany(db.penawaran, { as: "penawaranusr" });
 db.penawaran.belongsTo(db.user, {
   as: "penawaranusr",
   foreignKey: "id_user",
