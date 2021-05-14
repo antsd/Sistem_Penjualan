@@ -6,6 +6,10 @@ module.exports = (app) => {
   // Create a new penawaran
   router.post("/", penawaran.create);
 
+  router.post("/create-pdf", penawaran.createPdf);
+
+  router.get("/fetch-pdf", penawaran.fetchPdf);
+
   // Retrieve all penawarans
   router.get("/", penawaran.findAll);
 

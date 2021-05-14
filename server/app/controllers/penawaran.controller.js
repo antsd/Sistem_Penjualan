@@ -1,9 +1,12 @@
 const db = require("../models");
+const pdf = require("html-pdf");
 const Penawaran = db.penawaran;
 const Barang = db.barang;
 const Customer = db.customer;
 const Op = db.Sequelize.Op;
 const Sequelize = require("sequelize");
+const invoiceTemplate = require("../documents/Penawaran");
+const path = require("path");
 
 const getPagination = (page, size) => {
   const limit = size ? +size : 3;
@@ -21,7 +24,7 @@ const getPagingData = (data, page, limit) => {
 };
 
 // Create and Save a new Tutorial
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
   // Validate request
   if (!req.body.id_penawaran) {
     res.status(400).send({
@@ -30,27 +33,43 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a Tutorial
-  const penawaran = {
-    id_penawaran: req.body.id_penawaran,
-    disc: req.body.disc,
-    ppn: req.body.ppn,
-    grand_total: req.body.grand_total,
-    id_perusahaan: req.body.id_perusahaan,
-    id_user: req.body.id_user,
-  };
+  try {
+    const { barang, ...data } = req.body;
+    const penawaran = await Penawaran.create(data);
 
-  // Save Tutorial in the database
-  Penawaran.create(penawaran)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Barang.",
-      });
+    if (barang && barang.length > 0) {
+      penawaran.setBarang(barang);
+    }
+    return res.status(200).json(penawaran);
+  } catch (err) {
+    return res.status(500).send({
+      message: err.message || "Some error occurred while retrieving tutorials.",
     });
+  }
+
+  // // Create a Tutorial
+  // const penawaran = {
+  //   id_penawaran: req.body.id_penawaran,
+  //   subtotal: req.body.subtotal,
+  //   disc: req.body.disc,
+  //   after_disc: req.body.after_disc,
+  //   ppn: req.body.ppn,
+  //   grand_total: req.body.grand_total,
+  //   id_perusahaan: req.body.id_perusahaan,
+  //   id_user: req.body.id_user,
+  // };
+
+  // // Save Tutorial in the database
+  // Penawaran.create(penawaran)
+  //   .then((data) => {
+  //     res.send(data);
+  //   })
+  //   .catch((err) => {
+  //     res.status(500).send({
+  //       message:
+  //         err.message || "Some error occurred while creating the Barang.",
+  //     });
+  //   });
 };
 
 // Retrieve all Tutorials from the database.
@@ -108,36 +127,6 @@ exports.findAll = (req, res) => {
       });
     });
 };
-
-// exports.addPenawaran = (req, res) => {
-//   const id_penawaran = req.params.id_penawaran;
-//   const id_barang = req.res.id_barang;
-
-//   Barang.findByPk(id_barang)
-//     .then((barang) => {
-//       if (!barang) {
-//         res.status(500).send({
-//           message: "Barang tidak ditemukannn",
-//         });
-//         Penawaran.findByPk(id_penawaran).then((penawaran) => {
-//           if (!penawaran) {
-//             res.status(500).send({
-//               message: "penawaran tidak ditemukan",
-//             });
-//           }
-//         });
-//         barang.addPenawaran(penawaran);
-//         res.send({
-//           message: "Barang was updated successfully.",
-//         });
-//       }
-//     })
-//     .catch((err) => {
-//       res.status(500).send({
-//         message: "Error retrieving Tutorial with id=" + id_penawaran,
-//       });
-//     });
-// };
 
 // Find a single Tutorial with an id
 exports.findOne = (req, res) => {
@@ -221,4 +210,24 @@ exports.deleteAll = (req, res) => {
           err.message || "Some error occurred while removing all Barang.",
       });
     });
+};
+
+exports.createPdf = (req, res) => {
+  var config = {
+    format: "A4",
+    localUrlAccess: true,
+    directory: "../documents",
+  };
+  const zz = path.join("app", "controllers", "result.pdf");
+  pdf.create(invoiceTemplate(req.body), config).toFile(zz, (err) => {
+    if (err) {
+      res.send(Promise.reject());
+    }
+
+    res.send(Promise.resolve());
+  });
+};
+
+exports.fetchPdf = (req, res) => {
+  res.sendFile(`/${__dirname}/result.pdf`);
 };

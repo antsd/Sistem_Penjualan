@@ -45,12 +45,14 @@ db.penawaran.belongsToMany(db.barang, {
   through: "DetailPenawaran",
   foreignKey: "id_penawaran",
   as: "barang",
+  otherKey: "id_barang",
 });
 
 db.barang.belongsToMany(db.penawaran, {
   through: "DetailPenawaran",
   foreignKey: "id_barang",
-  as: "barang",
+  as: "penawaran",
+  otherKey: "id_penawaran",
 });
 
 // db.customer.hasMany(db.penawaran, { as: "perusahaan" });

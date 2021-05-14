@@ -4,7 +4,13 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       primaryKey: true,
     },
+    subtotal: {
+      type: Sequelize.INTEGER,
+    },
     disc: {
+      type: Sequelize.INTEGER,
+    },
+    after_disc: {
       type: Sequelize.INTEGER,
     },
     ppn: {
@@ -14,6 +20,6 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
     },
   });
-  
+
   return Penawaran;
 };

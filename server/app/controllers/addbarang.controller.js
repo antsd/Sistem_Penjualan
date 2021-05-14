@@ -18,7 +18,10 @@ exports.create = (req, res) => {
   };
 
   // Save Tutorial in the database
-  DetailPenawaran.create(penawaran)
+  DetailPenawaran.bulkCreate([penawaran], {
+    individualHooks: true,
+    returning: true,
+  })
     .then((data) => {
       res.send(data);
     })
