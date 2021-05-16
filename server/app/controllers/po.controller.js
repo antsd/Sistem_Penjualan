@@ -5,6 +5,7 @@ const Customer = db.customer;
 const Op = db.Sequelize.Op;
 const Sequelize = require("sequelize");
 const suratJalanTemplate = require("../documents/Surat-jalan");
+const invoiceTemplate = require("../documents/Invoice");
 const path = require("path");
 const pdf = require("html-pdf");
 
@@ -209,7 +210,7 @@ exports.createInvoicePdf = (req, res) => {
     format: "A4",
     localUrlAccess: true,
   };
-  const zz = path.join("app", "controllers", "penawaran.pdf");
+  const zz = path.join("app", "controllers", "invoice.pdf");
   pdf.create(invoiceTemplate(req.body), config).toFile(zz, (err) => {
     if (err) {
       res.send(Promise.reject());
@@ -220,5 +221,5 @@ exports.createInvoicePdf = (req, res) => {
 };
 
 exports.fetchInvoicePdf = (req, res) => {
-  res.sendFile(`/${__dirname}/penawaran.pdf`);
+  res.sendFile(`/${__dirname}/invoice.pdf`);
 };

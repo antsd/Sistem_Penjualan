@@ -9,7 +9,7 @@ module.exports = (data) => {
     <td class="justify-center">${i.unit}</td>
     <td class="justify-right">${i.harga}</td>
     <td class="justify-right">${i.total}</td>
-  </tr>>`;
+  </tr>`;
   });
   return `<!DOCTYPE html>
   <html>
