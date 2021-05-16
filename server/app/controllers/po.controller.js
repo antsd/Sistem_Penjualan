@@ -1,12 +1,12 @@
 const db = require("../models");
-const pdf = require("html-pdf");
-const Penawaran = db.penawaran;
+const Po = db.po;
 const Barang = db.barang;
 const Customer = db.customer;
 const Op = db.Sequelize.Op;
 const Sequelize = require("sequelize");
-const invoiceTemplate = require("../documents/Penawaran");
+const suratJalanTemplate = require("../documents/Surat-jalan");
 const path = require("path");
+const pdf = require("html-pdf");
 
 const getPagination = (page, size) => {
   const limit = size ? +size : 3;
@@ -16,17 +16,17 @@ const getPagination = (page, size) => {
 };
 
 const getPagingData = (data, page, limit) => {
-  const { count: totalItems, rows: penawaran } = data;
+  const { count: totalItems, rows: po } = data;
   const currentPage = page ? +page : 0;
   const totalPages = Math.ceil(totalItems / limit);
 
-  return { totalItems, penawaran, totalPages, currentPage };
+  return { totalItems, po, totalPages, currentPage };
 };
 
 // Create and Save a new Tutorial
 exports.create = async (req, res) => {
   // Validate request
-  if (!req.body.id_penawaran) {
+  if (!req.body.id_po) {
     res.status(400).send({
       message: "Content can not be empty!",
     });
@@ -35,53 +35,27 @@ exports.create = async (req, res) => {
 
   try {
     const { barang, ...data } = req.body;
-    const penawaran = await Penawaran.create(data);
+    const po = await Po.create(data);
 
     if (barang && barang.length > 0) {
-      penawaran.setBarang(barang);
+      po.setBarang(barang);
     }
-    return res.status(200).json(penawaran);
+    return res.status(200).json(po);
   } catch (err) {
     return res.status(500).send({
       message: err.message || "Some error occurred while retrieving tutorials.",
     });
   }
-
-  // // Create a Tutorial
-  // const penawaran = {
-  //   id_penawaran: req.body.id_penawaran,
-  //   subtotal: req.body.subtotal,
-  //   disc: req.body.disc,
-  //   after_disc: req.body.after_disc,
-  //   ppn: req.body.ppn,
-  //   grand_total: req.body.grand_total,
-  //   id_perusahaan: req.body.id_perusahaan,
-  //   id_user: req.body.id_user,
-  // };
-
-  // // Save Tutorial in the database
-  // Penawaran.create(penawaran)
-  //   .then((data) => {
-  //     res.send(data);
-  //   })
-  //   .catch((err) => {
-  //     res.status(500).send({
-  //       message:
-  //         err.message || "Some error occurred while creating the Barang.",
-  //     });
-  //   });
 };
 
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
-  const { page, size, id_penawaran } = req.query;
-  var condition = id_penawaran
-    ? { id_penawaran: { [Op.like]: `%${id_penawaran}%` } }
-    : null;
+  const { page, size, id_po } = req.query;
+  var condition = id_po ? { id_po: { [Op.like]: `%${id_po}%` } } : null;
 
   const { limit, offset } = getPagination(page, size);
 
-  Penawaran.findAndCountAll({
+  Po.findAndCountAll({
     where: condition,
     limit,
     offset,
@@ -130,25 +104,25 @@ exports.findAll = (req, res) => {
 
 // Find a single Tutorial with an id
 exports.findOne = (req, res) => {
-  const id_penawaran = req.params.id_penawaran;
+  const id_po = req.params.id_po;
 
-  Penawaran.findByPk(id_penawaran)
+  Po.findByPk(id_po)
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving Tutorial with id=" + id_penawaran,
+        message: "Error retrieving Tutorial with id=" + id_po,
       });
     });
 };
 
 // Update a Tutorial by the id in the request
 exports.update = (req, res) => {
-  const id_penawaran = req.params.id_penawaran;
+  const id_po = req.params.id_po;
 
-  Penawaran.update(req.body, {
-    where: { id_penawaran: id_penawaran },
+  Po.update(req.body, {
+    where: { id_po: id_po },
   })
     .then((num) => {
       if (num == 1) {
@@ -157,13 +131,13 @@ exports.update = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot update Barang with id=${id_penawaran}. Maybe Barang was not found or req.body is empty!`,
+          message: `Cannot update Barang with id=${id_po}. Maybe Barang was not found or req.body is empty!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error updating Barang with id=" + id_penawaran,
+        message: "Error updating Barang with id=" + id_po,
         err,
       });
     });
@@ -171,10 +145,10 @@ exports.update = (req, res) => {
 
 // Delete a Tutorial with the specified id in the request
 exports.delete = (req, res) => {
-  const id_penawaran = req.params.id_penawaran;
+  const id_po = req.params.id_po;
 
-  Penawaran.destroy({
-    where: { id_penawaran: id_penawaran },
+  Po.destroy({
+    where: { id_po: id_po },
   })
     .then((num) => {
       if (num == 1) {
@@ -183,21 +157,20 @@ exports.delete = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot delete Barang with id=${id_penawaran}. Maybe Barang was not found!`,
+          message: `Cannot delete Barang with id=${id_po}. Maybe Barang was not found!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Could not delete Barang with id=" + id_penawaran,
+        message: err.message || "Could not delete Barang with id=" + id_po,
       });
     });
 };
 
 // Delete all Tutorials from the database.
 exports.deleteAll = (req, res) => {
-  Penawaran.destroy({
+  Po.destroy({
     where: {},
     truncate: false,
   })
@@ -212,11 +185,29 @@ exports.deleteAll = (req, res) => {
     });
 };
 
-exports.createPdf = (req, res) => {
+exports.createSuratJalanPdf = (req, res) => {
   var config = {
     format: "A4",
     localUrlAccess: true,
-    directory: "../documents",
+  };
+  const zz = path.join("app", "controllers", "surat-jalan.pdf");
+  pdf.create(suratJalanTemplate(req.body), config).toFile(zz, (err) => {
+    if (err) {
+      res.send(Promise.reject());
+    }
+
+    res.send(Promise.resolve());
+  });
+};
+
+exports.fetchSuratJalanPdf = (req, res) => {
+  res.sendFile(`/${__dirname}/surat-jalan.pdf`);
+};
+
+exports.createInvoicePdf = (req, res) => {
+  var config = {
+    format: "A4",
+    localUrlAccess: true,
   };
   const zz = path.join("app", "controllers", "penawaran.pdf");
   pdf.create(invoiceTemplate(req.body), config).toFile(zz, (err) => {
@@ -228,6 +219,6 @@ exports.createPdf = (req, res) => {
   });
 };
 
-exports.fetchPdf = (req, res) => {
+exports.fetchInvoicePdf = (req, res) => {
   res.sendFile(`/${__dirname}/penawaran.pdf`);
 };

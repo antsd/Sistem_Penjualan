@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>PDF Result Template</title>
+    <style>
+      .invoice-box {
+        max-width: 800px;
+        margin: auto;
+        padding: 30px;
+        line-height: 24px;
+        border: 1px solid #eee;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        font-size: 14px;
+        font-family: "Times New Roman", "Helvetica";
+        color: #555;
+      }
+      .justify-center {
+        text-align: center;
+      }
+      .justify-right {
+        text-align: right;
+      }
+      .invoice {
+        flex-direction: column;
+      }
+      .customer {
+        line-height: 20px;
+        display: flex;
+        width: 50%;
+      }
+      .customer-box {
+        display: flex;
+        justify-content: space-between;
+      }
+      .tb-1 {
+        width: 5%;
+      }
+      .tb-2 {
+        width: 30%;
+      }
+      .tb-3 {
+        width: 15%;
+      }
+      .tb-4 {
+        width: 10%;
+      }
+      .tb-5 {
+        width: 10%;
+      }
+      .tb-6 {
+        width: 15%;
+      }
+      .tb-7 {
+        width: 15%;
+      }
+      .tb-8 {
+        width: 37.5%;
+      }
+      .customer-left {
+        flex-direction: column;
+        width: 30%;
+      }
+      .dear {
+        display: inline-block;
+        line-height: 5px;
+      }
+      .dear-1 {
+        display: inline-block;
+        line-height: 10px;
+      }
+
+      .customer-right {
+        line-height: 20px;
+        text-align: center;
+        width: 20%;
+      }
+      .invoice-box table {
+        width: 100%;
+      }
+      .invoice-box table td {
+        vertical-align: top;
+      }
+      .total {
+        font-size: 12px;
+        display: flex;
+        justify-content: flex-end;
+      }
+      .total_detail {
+        width: 40%;
+      }
+
+      .invoice-box table tr.top table td.title {
+        font-size: 45px;
+        color: #333;
+      }
+
+      .invoice-box table tr.heading td {
+        background: #eee;
+        text-align: center;
+        border: 1px solid #ddd;
+        font-weight: bold;
+      }
+      .invoice-box table tr.item td {
+        border: 1px solid #eee;
+      }
+      .invoice-box table tr.total td:nth-child(2) {
+        text-align: right;
+        border-top: 2px solid #eee;
+        font-weight: bold;
+      }
+      @media only screen and (max-width: 600px) {
+        .invoice-box table tr.top table td {
+          width: 100%;
+          display: block;
+          text-align: center;
+        }
+        .invoice-box table tr.information table td {
+          width: 100%;
+          display: block;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="invoice-box">
+      <img src="../assets/header.png" style="width: 100%" />
+      <img src="../assets/Line.png" style="width: 100%" />
+      <div class="customer-box">
+        <div class="customer">
+          <div class="customer-left">
+            <p>Messr</p>
+            <p>Factory</p>
+            <p>Address</p>
+            <p>Telp</p>
+            <p>Mess</p>
+          </div>
+          <div>
+            <p>:</p>
+            <p>:</p>
+            <p>:</p>
+            <p>:</p>
+            <p>:</p>
+          </div>
+        </div>
+        <div class="invoice customer-right">
+          <tr class="top">
+            <td colspan="2">
+              <table cellpadding="0" cellspacing="0">
+                <tr class="heading item">
+                  <td>Quotation Date</td>
+                </tr>
+                <tr class="item">
+                  <td>Quotation</td>
+                </tr>
+              </table>
+              <br />
+              <table cellpadding="0" cellspacing="0">
+                <tr class="heading item">
+                  <td>Quotation No</td>
+                </tr>
+                <tr class="item">
+                  <td>Quotation</td>
+                </tr>
+              </table>
+              <br />
+              <table cellpadding="0" cellspacing="0">
+                <tr class="heading item">
+                  <td>Remarks</td>
+                </tr>
+                <tr class="item">
+                  <td>Quotation</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr class="information">
+            <td colspan="1">
+              <table>
+                <tr></tr>
+              </table>
+            </td>
+          </tr>
+        </div>
+      </div>
+      <div class="dear">
+        <p>Dear Sir,</p>
+        <p>
+          Pursuant to your request. We are pleased submit the quotation bellow :
+        </p>
+      </div>
+      <div class="table-barang">
+        <table cellpadding="0" cellspacing="0">
+          <tr class="heading">
+            <td class="tb-1">NO</td>
+            <td class="tb-2">WORK DESCRIPTION</td>
+            <td class="tb-3">MATERIAL</td>
+            <td class="tb-4">QTY</td>
+            <td class="tb-5">UNIT</td>
+            <td class="tb-6">PRICE UNIT</td>
+            <td class="tb-7">AMOUNT</td>
+          </tr>
+          <tr class="item item-detail">
+            <td class="justify-center">1</td>
+            <td>Mesin Las</td>
+            <td class="justify-center">&nbsp</td>
+            <td class="justify-center">5</td>
+            <td class="justify-center">Pcs</td>
+            <td class="justify-right">1000000</td>
+            <td class="justify-right">5000000</td>
+          </tr>
+          <tr class="item item-detail">
+            <td class="justify-center">1</td>
+            <td>Mesin Las</td>
+            <td class="justify-center">Besi</td>
+            <td class="justify-center">5</td>
+            <td class="justify-center">Pcs</td>
+            <td class="justify-right">1000000</td>
+            <td class="justify-right">5000000</td>
+          </tr>
+        </table>
+      </div>
+      <div class="total">
+        <div class="total_detail item">
+          <table cellpadding="0" cellspacing="0">
+            <tr class="item">
+              <td>TOTAL</td>
+              <td class="justify-right tb-8">Subtotal</td>
+            </tr>
+            <tr class="item">
+              <td>DISCOUNT</td>
+              <td class="justify-right">Subtotal</td>
+            </tr>
+            <tr class="item">
+              <td>TOTAL(AFTER DISCOUNT)</td>
+              <td class="justify-right">Subtotal</td>
+            </tr>
+            <tr class="item">
+              <td>ROUND UP</td>
+              <td class="justify-right">Subtotal</td>
+            </tr>
+            <tr class="item">
+              <td>PPN</td>
+              <td class="justify-right">Subtotal</td>
+            </tr>
+            <tr class="item">
+              <td>GRAND TOTAL</td>
+              <td class="justify-right">Subtotal</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <br />
+      <br />
+      <div class="dear-1">
+        <p>Under Terms & Circumstance</p>
+        <p>Payment : 30 Days after invoice</p>
+        <p>Delivery: ASAP</p>
+        <p>
+          Transfer : BRI (Bank Rakyat Indonesia); a/n PT Dwidaya Mulia Setyawan
+        </p>
+        <p>No. Rek : 031901001423307</p>
+        <p>Validity : 2 Week</p>
+        <br />
+        <p>You will be please by placing on order to us.</p>
+        <br />
+        <p>Thanks you</p>
+        <br />
+        <br />
+        <p>Agustinus Ricky I</p>
+        <p>0813-1971 1919</p>
+      </div>
+    </div>
+  </body>
+</html>

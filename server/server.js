@@ -34,6 +34,7 @@ require("./app/routes/alluser.routes")(app);
 require("./app/routes/transaksi.routes")(app);
 require("./app/routes/penawaran.routes")(app);
 require("./app/routes/addbarang.routes")(app);
+require("./app/routes/po.routes")(app);
 
 function initial() {
   Role.create({

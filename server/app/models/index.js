@@ -29,6 +29,7 @@ db.DetailPenawaran = require("../models/detail.penawaran")(
   sequelize,
   Sequelize
 );
+db.po = require("../models/po.model")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   through: "user_roles",
@@ -65,6 +66,33 @@ db.penawaran.belongsTo(db.customer, {
 db.penawaran.belongsTo(db.user, {
   as: "penawaranusr",
   foreignKey: "id_user",
+});
+
+//PO
+// db.customer.hasMany(db.penawaran, { as: "perusahaan" });
+db.po.belongsTo(db.customer, {
+  as: "perusahaan",
+  foreignKey: "id_perusahaan",
+});
+
+// db.user.hasMany(db.penawaran, { as: "penawaranusr" });
+db.po.belongsTo(db.user, {
+  as: "penawaranusr",
+  foreignKey: "id_user",
+});
+
+db.po.belongsToMany(db.barang, {
+  through: "DetailPo",
+  foreignKey: "id_po",
+  as: "barang",
+  otherKey: "id_barang",
+});
+
+db.barang.belongsToMany(db.po, {
+  through: "DetailPo",
+  foreignKey: "id_barang",
+  as: "po",
+  otherKey: "id_po",
 });
 
 db.ROLES = ["user", "admin"];
